@@ -27,4 +27,12 @@ public class PlayerController : MonoBehaviour {
     public void OnJump(InputAction.CallbackContext ctx) {
         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
     }
+
+    public void OnLightAttack(InputAction.CallbackContext ctx) {
+        
+    }
+
+    public void OnHeavyAttack(InputAction.CallbackContext ctx) {
+        
+    }
 }
