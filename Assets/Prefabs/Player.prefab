@@ -199,7 +199,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5298589192153179456}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnLightAttackUp
+        m_MethodName: OnLightAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -212,38 +212,6 @@ MonoBehaviour:
     m_ActionId: f09f2f17-d6f8-4306-a702-b136ec401f5f
     m_ActionName: Player/LightAttackUp[/Keyboard/w,/Keyboard/j]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnLightAttackLeft
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 9d4015f7-2249-471e-8504-1e2a86b93e29
-    m_ActionName: Player/LightAttackLeft[/Keyboard/a,/Keyboard/j]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnLightAttackRight
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: e2694c48-4113-46d7-a951-7b9efdd0536b
-    m_ActionName: Player/LightAttackRight[/Keyboard/d,/Keyboard/j]
-  - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 130c8826-e42b-4a5f-9f7a-94661e84a870
     m_ActionName: Player/Join[/Keyboard/enter]
@@ -251,7 +219,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5298589192153179456}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnHeavyAttackUp
+        m_MethodName: OnHeavyAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -264,69 +232,21 @@ MonoBehaviour:
     m_ActionId: 3fe7c4b0-c812-4d0f-add6-d1d82c7d8137
     m_ActionName: Player/HeavyAttackUp[/Keyboard/w,/Keyboard/k]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnHeavyAttackLeft
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 83bf90bf-79df-4678-a48c-54c0b3166e3d
-    m_ActionName: Player/HeavyAttackLeft[/Keyboard/a,/Keyboard/k]
+      m_Calls: []
+    m_ActionId: 1ef17049-7f0e-4401-aa29-604e7ba327f6
+    m_ActionName: Modifiers/Up[/Keyboard/w,/XInputControllerWindows/leftStick/up]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnHeavyAttackRight
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 4903c02b-1b19-47da-a68b-00f517f091b2
-    m_ActionName: Player/HeavyAttackRight[/Keyboard/d,/Keyboard/k]
+      m_Calls: []
+    m_ActionId: 32a654ea-5880-4c67-ba45-32f05d0a25e7
+    m_ActionName: Modifiers/Left[/Keyboard/a,/XInputControllerWindows/leftStick/left]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnLightAttackDown
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 377ab1cf-c920-4a92-a0bd-893709d06597
-    m_ActionName: Player/LightAttackDown[/Keyboard/s,/Keyboard/j]
+      m_Calls: []
+    m_ActionId: 029af217-f9c8-4028-ace8-ed36648de0a3
+    m_ActionName: Modifiers/Right[/Keyboard/d,/XInputControllerWindows/leftStick/right]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnHeavyAttackDown
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 3d66acc9-3361-4755-8d5c-12112f6dcdc1
-    m_ActionName: Player/HeavyAttackDown[/Keyboard/s,/Keyboard/k]
+      m_Calls: []
+    m_ActionId: bf3af757-efa2-4e7e-b824-a9d90fbb329b
+    m_ActionName: Modifiers/Down[/Keyboard/s,/XInputControllerWindows/leftStick/down]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -344,8 +264,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0810bb38204c0c4da1cb9e9a216e267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  upModifier: {fileID: -4831458129638693258, guid: 08d5b1f8b8ac50e48beb680970c4e6fe, type: 3}
+  rightModifier: {fileID: 7695440250464964440, guid: 08d5b1f8b8ac50e48beb680970c4e6fe, type: 3}
+  downModifier: {fileID: 8534466238482097826, guid: 08d5b1f8b8ac50e48beb680970c4e6fe, type: 3}
+  leftModifier: {fileID: 235125060718894179, guid: 08d5b1f8b8ac50e48beb680970c4e6fe, type: 3}
   hitBox: {fileID: 4442719430153837084, guid: 8e919247429afbb4cba3115d8ffe0206, type: 3}
   hitBoxBig: {fileID: 402375101526947493, guid: a1353fab2990c2b41a845ee2cbe8dc9c, type: 3}
   speed: 5
   jumpHeight: 7
   maxHealth: 10
+  damageLight: 1
+  damageHeavy: 2
