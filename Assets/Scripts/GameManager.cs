@@ -19,12 +19,9 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this);
     }
-
     
     public void OnPlayerLeave(PlayerInput player) => Debug.LogWarning("Player Disconnected");
-    
     public void OnPlayerJoined(PlayerInput player) => Debug.LogWarning("Player Connected");
-    
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;
