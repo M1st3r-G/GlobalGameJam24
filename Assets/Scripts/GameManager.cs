@@ -1,14 +1,14 @@
-using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class #SCRIPTNAME# : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     //ComponentReferences
     //Params
     //Temps
     //Publics
-    public static #SCRIPTNAME# Instance {get; set; }
-    #NOTRIM# 
+    public static GameManager Instance {get; set; }
+     
     private void Awake()
     {
         if (Instance is not null)
@@ -19,6 +19,11 @@ public class #SCRIPTNAME# : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(this);
     }
+
+    
+    public void OnPlayerLeave(PlayerInput player) => Debug.LogWarning("Player Disconnected");
+    
+    public void OnPlayerJoined(PlayerInput player) => Debug.LogWarning("Player Connected");
     
     private void OnDestroy()
     {
