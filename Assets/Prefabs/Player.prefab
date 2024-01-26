@@ -134,37 +134,21 @@ MonoBehaviour:
     m_ActionId: 7fb84719-2aa6-4f03-884c-56315cdf4c64
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnLightAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 1bff78f3-a9c7-490c-af19-93fbb66b6233
-    m_ActionName: Player/LightAttack[/Keyboard/k]
+      m_Calls: []
+    m_ActionId: f09f2f17-d6f8-4306-a702-b136ec401f5f
+    m_ActionName: Player/LightAttackUp[/Keyboard/w,/Keyboard/j]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnHeavyAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 115b2c1e-a521-4e42-9b3c-26409603e094
-    m_ActionName: Player/HeavyAttack[/Keyboard/j]
+      m_Calls: []
+    m_ActionId: 9d4015f7-2249-471e-8504-1e2a86b93e29
+    m_ActionName: Player/LightAttackLeft[/Keyboard/a,/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e2694c48-4113-46d7-a951-7b9efdd0536b
+    m_ActionName: Player/LightAttackRight[/Keyboard/d,/Keyboard/j]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 130c8826-e42b-4a5f-9f7a-94661e84a870
+    m_ActionName: Player/Join[/Keyboard/enter]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -186,7 +170,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: cc84f86f58b021645860d3544696e144, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
