@@ -17,19 +17,13 @@ public class PlayerController : MonoBehaviour {
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int damageLight;
-    [SerializeField] private int damageHeavy;
+    [SerializeField] [Range(1f, 10f)] private int maxHealth;
+    [SerializeField] [Range(1f, 10f)] private int damageLight;
+    [SerializeField] [Range(1f, 10f)] private int damageHeavy;
     //Temps
     private int currentHealth;
     private bool lookingRight;
     //Public
-    public enum Directions {
-        Up,
-        Down,
-        Left,
-        Right
-    }
 
     private void OnEnable() {
         upModifier.action.Enable();
@@ -59,7 +53,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {
-        rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, 1<<3);
+        if (hit.collider is not null) 
+            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
     }
 
     public void OnLightAttack(InputAction.CallbackContext ctx) {
@@ -68,18 +64,9 @@ public class PlayerController : MonoBehaviour {
         
         Vector2 pos = transform.position;
 
-        if (upModifier.action.IsPressed())
-        {
-            pos += Vector2.up;
-        }
-        else if (downModifier.action.IsPressed())
-        {
-            pos += Vector2.down;
-        }
-        else
-        {
-            pos += lookingRight ? Vector2.right : Vector2.left;
-        }
+        if (upModifier.action.IsPressed()) pos += Vector2.up;
+        else if (downModifier.action.IsPressed()) pos += Vector2.down;
+        else pos += lookingRight ? Vector2.right : Vector2.left;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
@@ -95,18 +82,9 @@ public class PlayerController : MonoBehaviour {
 
         Vector2 pos = transform.position;
 
-        if (upModifier.action.IsPressed())
-        {
-            pos += Vector2.up;
-        }
-        else if (downModifier.action.IsPressed())
-        {
-            pos += Vector2.down;
-        }
-        else
-        {
-            pos += lookingRight ? Vector2.right : Vector2.left;
-        }
+        if (upModifier.action.IsPressed()) pos += Vector2.up;
+        else if (downModifier.action.IsPressed()) pos += Vector2.down;
+        else pos += lookingRight ? Vector2.right : Vector2.left;
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
@@ -120,7 +98,7 @@ public class PlayerController : MonoBehaviour {
         ChangeHealth(-1);
     }
 
-    public void ChangeHealth(int amount) {
+    private void ChangeHealth(int amount) {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
         print(currentHealth);
         if (currentHealth == 0) Death();
