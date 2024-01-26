@@ -4,11 +4,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour {
+    
+    //ModifierReferences
+    [SerializeField] private InputActionReference upModifier;
+    [SerializeField] private InputActionReference rightModifier;
+    [SerializeField] private InputActionReference downModifier;
+    [SerializeField] private InputActionReference leftModifier;
+    
     //ComponentReferences
     private InputAction move;
     private Rigidbody2D rb;
-    [SerializeField] private GameObject hitBox;
-    [SerializeField] private GameObject hitBoxBig;
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
@@ -17,12 +22,28 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private int damageHeavy;
     //Temps
     private int currentHealth;
+    private bool lookingRight;
     //Public
     public enum Directions {
         Up,
         Down,
         Left,
         Right
+    }
+
+    private void OnEnable() {
+        upModifier.action.Enable();
+        rightModifier.action.Enable();
+        downModifier.action.Enable();
+        leftModifier.action.Enable();
+    }
+
+
+    private void OnDisable() {
+        upModifier.action.Disable();
+        rightModifier.action.Disable();
+        downModifier.action.Disable();
+        leftModifier.action.Disable();
     }
 
     private void Awake() {
@@ -32,28 +53,32 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        rb.velocity = new Vector2(move.ReadValue<float>() * speed, rb.velocity.y);
+        float dir = move.ReadValue<float>() * speed;
+        lookingRight = dir > 0;
+        rb.velocity = new Vector2(dir, rb.velocity.y);
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {
         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
     }
 
-    private void LightAttack(Directions direction)
-    {
+    public void OnLightAttack(InputAction.CallbackContext ctx) {
+        if (!ctx.performed) return;
+        print("LightAttack");
+        
         Vector2 pos = transform.position;
-        switch (direction)
+
+        if (upModifier.action.IsPressed())
         {
-            case Directions.Up:
-                pos += Vector2.up;
-                break;
-            case Directions.Down:
-                Debug.LogWarning("DownAttackWeak");
-                break;
-            case Directions.Left:
-            case Directions.Right:
-                pos += direction == Directions.Left ? Vector2.left : Vector2.right;
-                break;
+            pos += Vector2.up;
+        }
+        else if (downModifier.action.IsPressed())
+        {
+            pos += Vector2.down;
+        }
+        else
+        {
+            pos += lookingRight ? Vector2.right : Vector2.left;
         }
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
@@ -64,20 +89,23 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void HeavyAttack(Directions direction) {
+    public void OnHeavyAttack(InputAction.CallbackContext ctx) {
+        if (!ctx.performed) return;
+        print("HeavyAttack");
+
         Vector2 pos = transform.position;
-        switch (direction)
+
+        if (upModifier.action.IsPressed())
         {
-            case Directions.Up:
-                pos += Vector2.up;
-                break;
-            case Directions.Down:
-                Debug.LogWarning("DownAttackHeavy");
-                break;
-            case Directions.Left:
-            case Directions.Right:
-                pos += direction == Directions.Left ? Vector2.left : Vector2.right;
-                break;
+            pos += Vector2.up;
+        }
+        else if (downModifier.action.IsPressed())
+        {
+            pos += Vector2.down;
+        }
+        else
+        {
+            pos += lookingRight ? Vector2.right : Vector2.left;
         }
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
@@ -101,37 +129,5 @@ public class PlayerController : MonoBehaviour {
     private void Death() {
         print(gameObject.name + " died");
         Destroy(gameObject);
-    }
-
-    public void OnLightAttackUp(InputAction.CallbackContext ctx) {
-        if(ctx.performed) LightAttack(Directions.Up);
-    }
-
-    public void OnLightAttackLeft(InputAction.CallbackContext ctx) {
-        if(ctx.performed) LightAttack(Directions.Left);
-    }
-
-    public void OnLightAttackRight(InputAction.CallbackContext ctx) {
-        if(ctx.performed) LightAttack(Directions.Down);
-    }
-
-    public void OnLightAttackDown(InputAction.CallbackContext ctx) {
-        if(ctx.performed) LightAttack(Directions.Down);
-    }
-
-    public void OnHeavyAttackUp(InputAction.CallbackContext ctx) {
-        if(ctx.performed) HeavyAttack(Directions.Up);
-    }
-
-    public void OnHeavyAttackLeft(InputAction.CallbackContext ctx) {
-        if(ctx.performed) HeavyAttack(Directions.Left);
-    }
-
-    public void OnHeavyAttackRight(InputAction.CallbackContext ctx) {
-        if (ctx.performed) HeavyAttack(Directions.Right);
-    }
-
-    public void OnHeavyAttackDown(InputAction.CallbackContext ctx) {
-        if (ctx.performed) HeavyAttack(Directions.Down);
     }
 }
