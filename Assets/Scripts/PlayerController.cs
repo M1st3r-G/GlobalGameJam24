@@ -17,19 +17,13 @@ public class PlayerController : MonoBehaviour {
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int damageLight;
-    [SerializeField] private int damageHeavy;
+    [SerializeField] [Range(1f, 10f)] private int maxHealth;
+    [SerializeField] [Range(1f, 10f)] private int damageLight;
+    [SerializeField] [Range(1f, 10f)] private int damageHeavy;
     //Temps
     private int currentHealth;
     private bool lookingRight;
     //Public
-    public enum Directions {
-        Up,
-        Down,
-        Left,
-        Right
-    }
 
     private void OnEnable() {
         upModifier.action.Enable();
