@@ -51,7 +51,7 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
 
-        Instantiate(hitBox, pos, Quaternion.identity);
+        Destroy(Instantiate(hitBox, pos, Quaternion.identity), 0.5f);
     }
 
     private void HeavyAttack(Directions direction) {
@@ -70,16 +70,38 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
 
-        Instantiate(hitBoxBig, pos, Quaternion.identity);
+        Destroy(Instantiate(hitBoxBig, pos, Quaternion.identity), 0.5f);
     }
 
-    public void OnLightAttackUp(InputAction.CallbackContext ctx) => LightAttack(Directions.Up);
-    public void OnLightAttackLeft(InputAction.CallbackContext ctx) => LightAttack(Directions.Left);
-    public void OnLightAttackRight(InputAction.CallbackContext ctx) => LightAttack(Directions.Down);
-    public void OnLightAttackDown(InputAction.CallbackContext ctx) => LightAttack(Directions.Down);
-    
-    public void OnHeavyAttackUp(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Up);
-    public void OnHeavyAttackLeft(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Left);
-    public void OnHeavyAttackRight(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Right);
-    public void OnHeavyAttackDown(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Down);
+    public void OnLightAttackUp(InputAction.CallbackContext ctx) {
+        if(ctx.performed) LightAttack(Directions.Up);
+    }
+
+    public void OnLightAttackLeft(InputAction.CallbackContext ctx) {
+        if(ctx.performed) LightAttack(Directions.Left);
+    }
+
+    public void OnLightAttackRight(InputAction.CallbackContext ctx) {
+        if(ctx.performed) LightAttack(Directions.Down);
+    }
+
+    public void OnLightAttackDown(InputAction.CallbackContext ctx) {
+        if(ctx.performed) LightAttack(Directions.Down);
+    }
+
+    public void OnHeavyAttackUp(InputAction.CallbackContext ctx) {
+        if(ctx.performed) HeavyAttack(Directions.Up);
+    }
+
+    public void OnHeavyAttackLeft(InputAction.CallbackContext ctx) {
+        if(ctx.performed) HeavyAttack(Directions.Left);
+    }
+
+    public void OnHeavyAttackRight(InputAction.CallbackContext ctx) {
+        if (ctx.performed) HeavyAttack(Directions.Right);
+    }
+
+    public void OnHeavyAttackDown(InputAction.CallbackContext ctx) {
+        if (ctx.performed) HeavyAttack(Directions.Down);
+    }
 }
