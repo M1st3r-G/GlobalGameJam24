@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +13,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
     [SerializeField] private int maxHealth;
+    [SerializeField] private int damageLight;
+    [SerializeField] private int damageHeavy;
     //Temps
     private int currentHealth;
     //Public
@@ -56,7 +56,12 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
 
-        Destroy(Instantiate(hitBox, pos, Quaternion.identity), 0.5f);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
+        foreach (var hit in hits) {
+            PlayerController playerHit = hit.GetComponent<PlayerController>();
+            if (playerHit is null || playerHit == this) continue;
+            playerHit.ChangeHealth(-damageLight);
+        }
     }
 
     private void HeavyAttack(Directions direction) {
@@ -75,7 +80,12 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
 
-        Destroy(Instantiate(hitBoxBig, pos, Quaternion.identity), 0.5f);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
+        foreach (var hit in hits) {
+            PlayerController playerHit = hit.GetComponent<PlayerController>();
+            if (playerHit is null || playerHit == this) continue;
+            playerHit.ChangeHealth(-damageHeavy);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
