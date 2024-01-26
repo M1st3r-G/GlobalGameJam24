@@ -14,6 +14,12 @@ public class PlayerController : MonoBehaviour {
     private float jumpHeight;
     //Temps
     //Publics
+    public enum Directions {
+        Up,
+        Down,
+        Left,
+        Right
+    }
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -28,11 +34,22 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
     }
 
-    public void OnLightAttack(InputAction.CallbackContext ctx) {
-        
+    private void LightAttack(Directions direction) {
+        print("Light Attack");
     }
 
-    public void OnHeavyAttack(InputAction.CallbackContext ctx) {
-        
+    private void HeavyAttack(Directions direction) {
+        print("Heavy Attack");
     }
+    
+    
+
+    public void OnLightAttackUp(InputAction.CallbackContext ctx) => LightAttack(Directions.Up);
+    public void OnLightAttackLeft(InputAction.CallbackContext ctx) => LightAttack(Directions.Left);
+    public void OnLightAttackRight(InputAction.CallbackContext ctx) => LightAttack(Directions.Down);
+    public void OnLightAttackDown(InputAction.CallbackContext ctx) => LightAttack(Directions.Down);
+    public void OnHeavyAttackUp(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Up);
+    public void OnHeavyAttackLeft(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Left);
+    public void OnHeavyAttackRight(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Right);
+    public void OnHeavyAttackDown(InputAction.CallbackContext ctx) => HeavyAttack(Directions.Down);
 }
