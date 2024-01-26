@@ -348,3 +348,4 @@ MonoBehaviour:
   hitBoxBig: {fileID: 402375101526947493, guid: a1353fab2990c2b41a845ee2cbe8dc9c, type: 3}
   speed: 5
   jumpHeight: 7
+  maxHealth: 10

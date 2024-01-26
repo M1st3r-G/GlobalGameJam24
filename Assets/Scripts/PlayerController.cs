@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,7 +14,9 @@ public class PlayerController : MonoBehaviour {
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
+    [SerializeField] private int maxHealth;
     //Temps
+    private int currentHealth;
     //Public
     public enum Directions {
         Up,
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         move = GetComponent<PlayerInput>().actions.FindAction("Move");
+        currentHealth = maxHealth;
     }
 
     private void FixedUpdate() {
@@ -71,6 +76,21 @@ public class PlayerController : MonoBehaviour {
         }
 
         Destroy(Instantiate(hitBoxBig, pos, Quaternion.identity), 0.5f);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        ChangeHealth(-1);
+    }
+
+    public void ChangeHealth(int amount) {
+        currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
+        print(currentHealth);
+        if (currentHealth == 0) Death();
+    }
+
+    private void Death() {
+        print(gameObject.name + " died");
+        Destroy(gameObject);
     }
 
     public void OnLightAttackUp(InputAction.CallbackContext ctx) {
