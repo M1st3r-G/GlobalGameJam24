@@ -33,18 +33,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LightAttack",
+                    "name": "Attack",
                     "type": "Button",
                     "id": "f09f2f17-d6f8-4306-a702-b136ec401f5f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "HeavyAttack",
-                    "type": "Button",
-                    "id": "3fe7c4b0-c812-4d0f-add6-d1d82c7d8137",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -160,34 +151,12 @@
                 },
                 {
                     "name": "",
-                    "id": "5ef183db-8b96-495d-b477-119ce74a6ad1",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "HeavyAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "4ed1ccff-20e3-4e97-a26c-1d886ee24678",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "HeavyAttack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "3da396aa-ce6d-4441-84f7-62b54616bc0c",
-                    "path": "<Keyboard>/j",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "LightAttack",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -198,7 +167,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Controller",
-                    "action": "LightAttack",
+                    "action": "Attack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
