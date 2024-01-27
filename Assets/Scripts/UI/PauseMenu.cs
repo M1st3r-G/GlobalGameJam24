@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,10 @@ namespace UI
         //Params
         //Temps
         //Publics
+
+        private void Start() {
+            JumpTo(false);
+        }
 
         private void OnEnable() {
             pauseAction.action.Enable();
