@@ -20,8 +20,9 @@ public class PlayerController : MonoBehaviour {
     private Animator anim;
     private CharacterData currentCharacter;
     private SpriteRenderer sr;
+    
     //Params
-    [SerializeField] [Range(0f,10f)] private float speed;
+    [SerializeField] [Range(0f, 10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
     [SerializeField] [Range(1f, 10f)] private int maxHealth;
     [SerializeField] [Range(1f, 10f)] private int damageLight;
@@ -29,17 +30,22 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] [Range(0f, 5f)] private float lightAttackLimit;
     [SerializeField] private Color damageColor;
     [SerializeField] private float secondsDamageIndicator;
+    [SerializeField] private bool spriteWrongWay;
+    
     //Temps
     private float lastAttackTime;
     private int currentHealth;
     private bool lookingRight;
+    private int ultCharge;
+
     //Public
     public delegate void PlayerDeathDelegate(PlayerInput player);
     public static PlayerDeathDelegate OnPlayerDeath;
 
-    public enum Direction
-    {
-        Up, Down, Side
+    public enum Direction {
+        Up,
+        Down,
+        Side
     }
 
     private void Awake() {
@@ -49,14 +55,14 @@ public class PlayerController : MonoBehaviour {
         sr = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
     }
-    
+
     public void OnUpModifier(InputAction.CallbackContext ctx) {
-        if(ctx.started) anim.SetBool(UpModifierBool, true);
+        if (ctx.started) anim.SetBool(UpModifierBool, true);
         else if (ctx.canceled) anim.SetBool(UpModifierBool, false);
     }
 
     public void OnDownModifier(InputAction.CallbackContext ctx) {
-        if(ctx.started) anim.SetBool(DownModifierBool, true);
+        if (ctx.started) anim.SetBool(DownModifierBool, true);
         else if (ctx.canceled) anim.SetBool(DownModifierBool, false);
     }
 
@@ -65,11 +71,11 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = new Vector2(dir, rb.velocity.y);
         if (Mathf.Abs(rb.velocity.x) > 0) lookingRight = dir > 0;
         anim.SetBool(LookingRightBool, lookingRight);
-        sr.flipX = !lookingRight;
+        sr.flipX = spriteWrongWay ? lookingRight : !lookingRight;
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, 1<<3);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, 1 << 3);
         anim.SetBool(JumpBool, hit.collider is not null);
     }
 
@@ -79,8 +85,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void OnAttack(InputAction.CallbackContext ctx) {
-        if (ctx.started)
-        {
+        if (ctx.started) {
             anim.SetBool(AttackBool, true);
             lastAttackTime = Time.time;
         }
@@ -88,6 +93,15 @@ public class PlayerController : MonoBehaviour {
         if (!ctx.canceled) return;
         anim.SetBool(AttackBool, false);
         anim.SetBool(Time.time - lastAttackTime > lightAttackLimit ? HeavyAttackBool : LightAttackBool, true);
+    }
+
+    public void OnUlt() {
+        if (ultCharge < 100) {
+            print(gameObject.name + "'S ULTIMATIVE FÄHIGKEIT LÄDT NOCH AUF");
+            return;
+        } 
+        print( gameObject.name + " HAT SEINE ULTIMATIVE FÄHIGKEIT BENUTZT!");
+        ultCharge = 0;
     }
 
     private void TriggerLightAttack(Direction dir) {
@@ -100,31 +114,32 @@ public class PlayerController : MonoBehaviour {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageLight);
+            ultCharge += 12;
         }
     }
 
     private Vector2 OffsetPosition(Direction dir) {
-        return (Vector2) transform.position + dir switch
-        {
-            Direction.Up => 2.5f*Vector2.up,
+        return (Vector2)transform.position + dir switch {
+            Direction.Up => 2.5f * Vector2.up,
             Direction.Down => Vector2.down,
             _ => Vector2.up + (lookingRight ? Vector2.right : Vector2.left)
         };
     }
-    
+
     private void TriggerHeavyAttack(Direction dir) {
         anim.SetBool(HeavyAttackBool, false);
-        
+
         Vector2 pos = OffsetPosition(dir);
-        
+
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageHeavy);
+            ultCharge += 18;
         }
     }
-    
+
     private void OnTriggerEnter2D(Collider2D other) {
         Death();
     }
@@ -141,6 +156,7 @@ public class PlayerController : MonoBehaviour {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
         StartCoroutine(Indicator(damageColor, secondsDamageIndicator));
         SoundManager.Instance.PlaySound(SoundManager.PlayerDamage);
+        ultCharge += 8;
         if (currentHealth == 0) Death();
     }
 
