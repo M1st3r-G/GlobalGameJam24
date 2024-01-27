@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour {
     private static readonly int AttackBool = Animator.StringToHash("Attack");
     private static readonly int HeavyAttackBool = Animator.StringToHash("Heavy");
     private static readonly int LightAttackBool = Animator.StringToHash("Light");
+    private static readonly int UltimateBool = Animator.StringToHash("Ultimate");
     
     //ComponentReferences
     private InputAction move;
@@ -95,15 +96,19 @@ public class PlayerController : MonoBehaviour {
         anim.SetBool(Time.time - lastAttackTime > lightAttackLimit ? HeavyAttackBool : LightAttackBool, true);
     }
 
-    public void OnUlt() {
-        if (ultCharge < 100) {
-            print(gameObject.name + "'S ULTIMATIVE FÄHIGKEIT LÄDT NOCH AUF");
-            return;
-        } 
+    public void OnUlt(InputAction.CallbackContext ctx) {
+        if (!ctx.performed) return; 
+        if (ultCharge < 100) return;
+        
         print( gameObject.name + " HAT SEINE ULTIMATIVE FÄHIGKEIT BENUTZT!");
+        anim.SetBool(UltimateBool, true);
         ultCharge = 0;
     }
 
+    private void TriggerUltimate() {
+        anim.SetBool(UltimateBool, false);
+    }
+    
     private void TriggerLightAttack(Direction dir) {
         anim.SetBool(LightAttackBool, false);
 
