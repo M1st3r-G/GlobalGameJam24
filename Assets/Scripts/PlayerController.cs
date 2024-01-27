@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private int chargeFromDamageTaken;
     [SerializeField] private int chargeFromLightAttack;
     [SerializeField] private int chargeFromHeavyAttack;
+    [SerializeField] private Image ultChargeBar;
     
     //Temps
     private float lastAttackTime;
@@ -132,7 +134,7 @@ public class PlayerController : MonoBehaviour {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageLight);
-            ultCharge += chargeFromLightAttack;
+            ChangeChargeBar(chargeFromLightAttack);
         }
     }
 
@@ -154,7 +156,7 @@ public class PlayerController : MonoBehaviour {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageHeavy);
-            ultCharge += chargeFromHeavyAttack;
+            ChangeChargeBar(chargeFromHeavyAttack);
         }
     }
 
@@ -174,8 +176,14 @@ public class PlayerController : MonoBehaviour {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
         StartCoroutine(Indicator(damageColor, secondsDamageIndicator));
         SoundManager.Instance.PlaySound(SoundManager.PlayerDamage);
-        ultCharge += chargeFromDamageTaken;
+        ChangeChargeBar(chargeFromDamageTaken);
         if (currentHealth == 0) Death();
+    }
+
+    private void ChangeChargeBar(int amount) {
+        ultCharge += amount;
+        if (ultCharge > neededUltCharge) ultCharge = neededUltCharge;
+        ultChargeBar.fillAmount = (float) ultCharge / neededUltCharge;
     }
 
     private IEnumerator Indicator(Color color, float seconds) {
