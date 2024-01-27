@@ -36,6 +36,7 @@ public class CameraController : MonoBehaviour
         Vector2 pos = new Vector2();
         foreach (PlayerController p in players)
         {
+            if (p.transform.position.y <= -10) continue;
             pos += (Vector2) p.transform.position;
         }
 
@@ -51,8 +52,18 @@ public class CameraController : MonoBehaviour
         return pos;
     }
     
+    private void OnPlayerLeave(PlayerController player) {
+        players.Remove(player);
+    }
 
     private void RefreshList(PlayerController player) => players.Add(player);
-    private void OnEnable() => GameManager.OnPlayerJoin += RefreshList;
-    private void OnDisable() => GameManager.OnPlayerJoin -= RefreshList;
+    private void OnEnable() {
+        GameManager.OnPlayerJoin += RefreshList;
+        GameManager.OnPlayerLeave += OnPlayerLeave;
+    }
+
+    private void OnDisable() {
+        GameManager.OnPlayerJoin -= RefreshList;
+        GameManager.OnPlayerLeave -= OnPlayerLeave;
+    }
 }
