@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerDisplay : MonoBehaviour
 {
     //ComponentReferences
     private SpriteRenderer sr;
+
     //Params
+    [SerializeField] private float holdTime;
     //Temps
+    private float startHold;
     private int currentCharacterIndex;
     //Public
 
@@ -21,7 +25,17 @@ public class PlayerDisplay : MonoBehaviour
     }
 
     public void Leave(InputAction.CallbackContext ctx) {
-        SelectionScreenManager.Instance.OnPlayerLeave(currentCharacterIndex);
+        SelectionScreenManager.Instance.PlayerLeave(currentCharacterIndex);
         Destroy(gameObject);
+    }
+
+
+    public void LoadNextScene(InputAction.CallbackContext ctx) {
+        if (ctx.started) startHold = Time.time;
+        if (!ctx.canceled || !(Time.time - startHold > holdTime)) return;
+        
+        GameObject tmp =  Instantiate(new GameObject());
+        tmp.AddComponent<PlayerInputCarriage>();
+        SceneManager.LoadScene(1);
     }
 }

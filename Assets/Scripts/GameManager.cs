@@ -1,10 +1,11 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
     //ComponentReferences
+    private PlayerInputManager inputManager;
     //Params
     //Temps
     //Publics
@@ -23,6 +24,18 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(this);
+
+        inputManager = GetComponent<PlayerInputManager>();
+    }
+
+    private void Start() {
+        Dictionary<InputDevice, Color> data = PlayerInputCarriage.Instance.GetData();
+        int i = 0;
+        foreach (KeyValuePair<InputDevice, Color> pair in data)
+        {
+            inputManager.JoinPlayer(i, i, null, pair.Key).GetComponent<SpriteRenderer>().color = pair.Value;
+            i++;
+        }
     }
 
     private void OnEnable() {
@@ -33,7 +46,7 @@ public class GameManager : MonoBehaviour
         PlayerController.OnPlayerDeath -= OnPlayerLeaved;
     }
 
-    private void OnPlayerLeaved(PlayerInput player) {
+    private static void OnPlayerLeaved(PlayerInput player) {
         OnPlayerLeave?.Invoke(player.GetComponent<PlayerController>());
     }
 
