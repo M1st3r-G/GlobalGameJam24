@@ -144,6 +144,7 @@ public class PlayerController : MonoBehaviour {
     private void ChangeHealth(int amount) {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
         StartCoroutine(Indicator(damageColor, 5));
+        SoundManager.Instance.PlaySound(SoundManager.PlayerDamage);
         if (currentHealth == 0) Death();
     }
 
