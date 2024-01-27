@@ -179,7 +179,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6950726899732566920, guid: dbb0407c94cf97144a00655ba24bfdfb, type: 3}
       propertyPath: m_Name
-      value: WolfganAmadeusMozart
+      value: WolfgangAmadeusMozart
       objectReference: {fileID: 0}
     - target: {fileID: 8397984542792570491, guid: dbb0407c94cf97144a00655ba24bfdfb, type: 3}
       propertyPath: m_LocalPosition.x
