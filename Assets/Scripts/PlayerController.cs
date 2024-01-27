@@ -62,9 +62,10 @@ public class PlayerController : MonoBehaviour {
 
     private void FixedUpdate() {
         float dir = move.ReadValue<float>() * speed;
-        lookingRight = dir > 0;
-        anim.SetBool(LookingRightBool, lookingRight);
         rb.velocity = new Vector2(dir, rb.velocity.y);
+        if (Mathf.Abs(rb.velocity.x) > 0) lookingRight = dir > 0;
+        anim.SetBool(LookingRightBool, lookingRight);
+        sr.flipX = !lookingRight;
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {
