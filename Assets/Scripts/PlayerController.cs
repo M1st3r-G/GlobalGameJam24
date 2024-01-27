@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -151,7 +149,7 @@ public class PlayerController : MonoBehaviour {
             color = new Color(color.r - r, color.g - g, color.b - b);
             frames--;
         }
-        color = Color.white;
+        sr.color = Color.white;
     }
 
     private void FindCounterValues(Color color, int frames, out int r, out int g, out int b) {
@@ -168,6 +166,6 @@ public class PlayerController : MonoBehaviour {
 
     public void SetCharacter(CharacterData character) {
         currentCharacter = character;
-        anim.runtimeAnimatorController = character.GetAnimationController;
+        anim.runtimeAnimatorController = currentCharacter.GetAnimationController;
     }
 }

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private PlayerInputManager inputManager;
     //Params
     //Temps
-    //Publics
+    //Public
     public static GameManager Instance {get; set; }
 
     public delegate void PlayerJoinDelegate(PlayerController player);
