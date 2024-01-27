@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -10,11 +8,10 @@ public class MovingPlatform : MonoBehaviour {
     [SerializeField] private EdgeCollider2D line;
     //Params
     private Vector2[] points;
-    [SerializeField] private float speed;
     [SerializeField] private float timeForLine;
     [SerializeField] private float waitTime;
     //Temps
-    //Publics
+    //Public
      
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -22,10 +19,8 @@ public class MovingPlatform : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        transform.position = Vector2.Lerp(points[0], points[1], (Mathf.PingPong(Time.time * speed, timeForLine + waitTime)- waitTime/2f)/timeForLine);
+        rb.MovePosition(Vector2.Lerp(points[0], points[1], (Mathf.PingPong(Time.time, timeForLine + waitTime)- waitTime/2f)/timeForLine));
     }
 
-    private Vector2[] GetPoints() {
-        return line.points;
-    }
+    private Vector2[] GetPoints() => line.points;
 }

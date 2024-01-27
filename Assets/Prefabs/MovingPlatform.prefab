@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1616572613481817553}
   - component: {fileID: 6064738321077041689}
   - component: {fileID: 6971959049808604145}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: MovingPlatform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -103,7 +103,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: f22220c9848389e408cec04d9defa33c, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -172,3 +172,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   line: {fileID: 0}
+  timeForLine: 3
+  waitTime: 1
