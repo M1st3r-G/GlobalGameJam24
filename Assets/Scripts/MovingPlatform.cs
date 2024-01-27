@@ -10,8 +10,6 @@ public class MovingPlatform : MonoBehaviour {
     //Temps
     private Vector2[] points;
     //Public
-    public Vector2 Movement { get; private set; }
-
 
     private void Awake() {
         points = line.points;
@@ -24,10 +22,7 @@ public class MovingPlatform : MonoBehaviour {
             float counter = 0;
             while (counter / timeForLine < 1) {
                 counter += Time.deltaTime;
-                Vector2 destination = Vector2.Lerp(points[rounds], points[(rounds + 1) % points.Length],
-                    counter / timeForLine);
-                transform.position = destination;
-                Movement = (destination - (Vector2) transform.position) / Time.deltaTime;
+                transform.position = Vector2.Lerp(points[rounds], points[(rounds + 1) % points.Length], counter / timeForLine);
                 yield return null;
             }
             rounds++;
