@@ -80,7 +80,19 @@ MonoBehaviour:
     m_ActionId: 42077827-99ae-424d-9cd3-416c31a28d00
     m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick/x,/XInputControllerWindows2/leftStick/x]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5701484122890916895}
+        m_TargetAssemblyTypeName: PlayerDisplay, Assembly-CSharp
+        m_MethodName: LoadNextScene
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7fb84719-2aa6-4f03-884c-56315cdf4c64
     m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth,/XInputControllerWindows2/buttonSouth]
   - m_PersistentCalls:
@@ -128,6 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24994f2be1033494ea63e767247c02d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  holdTime: 1.5
 --- !u!212 &7871291740588960024
 SpriteRenderer:
   m_ObjectHideFlags: 0

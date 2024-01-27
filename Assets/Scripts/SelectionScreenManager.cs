@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,25 +10,19 @@ public class SelectionScreenManager : MonoBehaviour
     [SerializeField] private Color[] possiblePlayers;
     private bool[] availablePlayers;
     //Temps
-    
+    private List<PlayerInput> playerData;
     //Public
-    public static SelectionScreenManager Instance {get; set; }
+    public static SelectionScreenManager Instance {get; private set; }
      
     private void Awake()
     {
-        if (Instance is not null)
-        {
-            Destroy(gameObject);
-            return;
-        }
         Instance = this;
-        DontDestroyOnLoad(this);
+        playerData = new List<PlayerInput>();
         availablePlayers = new bool[possiblePlayers.Length];
         for (int i = 0; i < availablePlayers.Length; i++)
         {
             availablePlayers[i] = true;
         }
-
     }
     
     private void OnDestroy()
@@ -35,12 +30,16 @@ public class SelectionScreenManager : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-
     public void OnPlayerJoined(PlayerInput player) {
-        player.transform.position = new Vector2(-6 + 4 * player.playerIndex, 0); 
+        player.transform.position = new Vector2(-6 + 4 * player.playerIndex, 0);
+        playerData.Add(player);
     }
 
-    public void OnPlayerLeave(int playerIndex) {
+    public void OnPlayerLeave(PlayerInput player) {
+        playerData.Remove(player);
+    }
+    
+    public void PlayerLeave(int playerIndex) {
         availablePlayers[playerIndex] = true;
     }
     
@@ -64,5 +63,12 @@ public class SelectionScreenManager : MonoBehaviour
         throw new Exception("Should have found a player");
     }
     
-    
+    public Dictionary<InputDevice, Color> GetData() {
+        Dictionary<InputDevice, Color> tmp = new Dictionary<InputDevice, Color>();
+        foreach (PlayerInput input in playerData)
+        {
+            tmp.Add(input.devices[0], input.GetComponent<SpriteRenderer>().color);
+        }
+        return tmp;
+    }
 }
