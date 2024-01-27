@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CharacterSelection;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,7 @@ public class GameManager : MonoBehaviour
     private PlayerInputManager inputManager;
     //Params
     //Temps
-    //Publics
+    //Public
     public static GameManager Instance {get; set; }
 
     public delegate void PlayerJoinDelegate(PlayerController player);
@@ -29,11 +30,11 @@ public class GameManager : MonoBehaviour
     }
 
     private void Start() {
-        Dictionary<InputDevice, Color> data = PlayerInputCarriage.Instance.GetData();
+        Dictionary<InputDevice, CharacterData> data = PlayerInputCarriage.Instance.GetData();
         int i = 0;
-        foreach (KeyValuePair<InputDevice, Color> pair in data)
+        foreach (KeyValuePair<InputDevice, CharacterData> pair in data)
         {
-            inputManager.JoinPlayer(i, i, null, pair.Key).GetComponent<SpriteRenderer>().color = pair.Value;
+            inputManager.JoinPlayer(i, i, null, pair.Key).GetComponent<PlayerController>().SetCharacter(pair.Value);
             i++;
         }
     }
