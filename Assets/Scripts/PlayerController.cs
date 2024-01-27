@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     private InputAction move;
     private Rigidbody2D rb;
     private Animator anim;
+    private SpriteRenderer sr;
     [SerializeField] private GameObject DebugCollider;
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
@@ -27,6 +29,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] [Range(1f, 10f)] private int damageLight;
     [SerializeField] [Range(1f, 10f)] private int damageHeavy;
     [SerializeField] [Range(0f, 5f)] private float lightAttackLimit;
+    [SerializeField] private Color damageColor;
     //Temps
     private float lastAttackTime;
     private int currentHealth;
@@ -44,6 +47,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         move = GetComponent<PlayerInput>().actions.FindAction("Move");
         anim = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();
         currentHealth = maxHealth;
     }
     
@@ -139,8 +143,25 @@ public class PlayerController : MonoBehaviour {
 
     private void ChangeHealth(int amount) {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
-        print(currentHealth);
+        StartCoroutine(Indicator(damageColor, 5));
         if (currentHealth == 0) Death();
+    }
+
+    private IEnumerator Indicator(Color color, int frames) {
+        FindCounterValues(color, frames, out int r, out int g, out int b);
+        while (frames > 0) {
+            sr.color = color;
+            yield return null;
+            color = new Color(color.r - r, color.g - g, color.b - b);
+            frames--;
+        }
+        color = Color.white;
+    }
+
+    private void FindCounterValues(Color color, int frames, out int r, out int g, out int b) {
+        r = (int) color.r / frames;
+        g = (int) color.g / frames;
+        b = (int) color.b / frames;
     }
 
     private void Death() {
