@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour {
     private int currentHealth;
     private bool lookingRight;
     //Public
+    public delegate void PlayerDeathDelegate(PlayerInput player);
+    public static PlayerDeathDelegate OnPlayerDeath;
 
     private void OnEnable() {
         upModifier.action.Enable();
@@ -106,6 +108,7 @@ public class PlayerController : MonoBehaviour {
 
     private void Death() {
         print(gameObject.name + " died");
+        OnPlayerDeath?.Invoke(GetComponent<PlayerInput>());
         Destroy(gameObject);
     }
 }
