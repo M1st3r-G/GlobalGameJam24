@@ -62,9 +62,10 @@ public class PlayerController : MonoBehaviour {
         float dir = move.ReadValue<float>() * speed;
         lookingRight = dir > 0;
         anim.SetBool(LookingRightBool, lookingRight);
-        rb.velocity = new Vector2(dir, rb.velocity.y) + (platform is null
+        rb.velocity = new Vector2(dir, rb.velocity.y);
+        /*+ (platform is null
             ? Vector2.zero
-            : new Vector2(platform.Movement.x, Mathf.Min(platform.Movement.y, 0)));
+            : new Vector2(platform.Movement.x, Mathf.Min(platform.Movement.y, 0)));*/
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {
@@ -133,6 +134,8 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Platform")) transform.SetParent(other.transform);
+        
         if (!other.gameObject.CompareTag("Platform")) return;
         RaycastHit2D leftHit = Physics2D.Raycast(new Vector2(transform.position.x + 0.49f, transform.position.y - 0.3f), Vector2.down, 0.6f, 1<<3);
         RaycastHit2D rightHit = Physics2D.Raycast(new Vector2(transform.position.x - 0.49f, transform.position.y - 0.3f), Vector2.down, 0.6f, 1<<3);
@@ -142,10 +145,12 @@ public class PlayerController : MonoBehaviour {
         if (rightHit.collider is not null) {
             if(!rightHit.transform.CompareTag("Platform")) return;
         }
+        Debug.LogWarning(other.gameObject.GetComponent<MovingPlatform>());
         platform = other.gameObject.GetComponent<MovingPlatform>();
     }
 
     private void OnCollisionExit2D(Collision2D other) {
+        if (other.gameObject.CompareTag("Platform")) transform.SetParent(null);
         if (other.gameObject.CompareTag("Platform")) platform = null;
     }
 

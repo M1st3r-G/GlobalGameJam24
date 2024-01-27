@@ -1,31 +1,38 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class MovingPlatform : MonoBehaviour {
     //ComponentReferences
-    private Rigidbody2D rb;
     [SerializeField] private EdgeCollider2D line;
     //Params
     [SerializeField] private float timeForLine;
     [SerializeField] private float waitTime;
     //Temps
     private Vector2[] points;
-    private Vector2 movement;
     //Public
-    public Vector2 Movement => movement;
-    
-     
+    public Vector2 Movement { get; private set; }
+
+
     private void Awake() {
-        rb = GetComponent<Rigidbody2D>();
-        points = GetPoints();
+        points = line.points;
+        StartCoroutine(MoveToPoint());
     }
 
-    private void FixedUpdate() {
-        Vector2 destination = Vector2.Lerp(points[0], points[1], (Mathf.PingPong(Time.time, timeForLine + waitTime)- waitTime/2f)/timeForLine);
-        rb.MovePosition(destination);
-        movement = (destination - (Vector2) transform.position) / Time.deltaTime;
+    private IEnumerator MoveToPoint() {
+        int rounds = 0;
+        while (true) {
+            float counter = 0;
+            while (counter / timeForLine < 1) {
+                counter += Time.deltaTime;
+                Vector2 destination = Vector2.Lerp(points[rounds], points[(rounds + 1) % points.Length],
+                    counter / timeForLine);
+                transform.position = destination;
+                Movement = (destination - (Vector2) transform.position) / Time.deltaTime;
+                yield return null;
+            }
+            rounds++;
+            if (rounds == points.Length) rounds = 0;
+            yield return new WaitForSeconds(waitTime);
+        }
     }
-
-    private Vector2[] GetPoints() => line.points;
 }
