@@ -269,13 +269,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0810bb38204c0c4da1cb9e9a216e267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugCollider: {fileID: 8921347400911060441, guid: 677956044d650cf41938a433811c5097, type: 3}
   speed: 5
   jumpHeight: 7
   maxHealth: 10
   damageLight: 1
   damageHeavy: 2
   lightAttackLimit: 1
+  damageColor: {r: 1, g: 0.4392157, b: 0.47843137, a: 1}
+  secondsDamageIndicator: 0.5
 --- !u!95 &2862972254134084544
 Animator:
   serializedVersion: 5

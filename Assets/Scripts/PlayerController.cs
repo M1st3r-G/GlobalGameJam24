@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] [Range(1f, 10f)] private int damageHeavy;
     [SerializeField] [Range(0f, 5f)] private float lightAttackLimit;
     [SerializeField] private Color damageColor;
+    [SerializeField] private float secondsDamageIndicator;
     //Temps
     private float lastAttackTime;
     private int currentHealth;
@@ -137,26 +138,15 @@ public class PlayerController : MonoBehaviour {
 
     private void ChangeHealth(int amount) {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
-        StartCoroutine(Indicator(damageColor, 5));
+        StartCoroutine(Indicator(damageColor, secondsDamageIndicator));
         SoundManager.Instance.PlaySound(SoundManager.PlayerDamage);
         if (currentHealth == 0) Death();
     }
 
-    private IEnumerator Indicator(Color color, int frames) {
-        FindCounterValues(color, frames, out int r, out int g, out int b);
-        while (frames > 0) {
-            sr.color = color;
-            yield return null;
-            color = new Color(color.r - r, color.g - g, color.b - b);
-            frames--;
-        }
+    private IEnumerator Indicator(Color color, float seconds) {
+        sr.color = color;
+        yield return new WaitForSeconds(seconds);
         sr.color = Color.white;
-    }
-
-    private void FindCounterValues(Color color, int frames, out int r, out int g, out int b) {
-        r = (int) color.r / frames;
-        g = (int) color.g / frames;
-        b = (int) color.b / frames;
     }
 
     private void Death() {
