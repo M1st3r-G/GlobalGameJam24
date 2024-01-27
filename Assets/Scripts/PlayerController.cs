@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     private InputAction move;
     private Rigidbody2D rb;
     private Animator anim;
+    [SerializeField] private GameObject DebugCollider;
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
@@ -88,13 +87,10 @@ public class PlayerController : MonoBehaviour {
     private void TriggerLightAttack(Direction dir) {
         anim.SetBool(LightAttackBool, false);
 
-        Vector2 pos = (Vector2) transform.position + dir switch
-        {
-            Direction.Up => Vector2.up,
-            Direction.Down => Vector2.down,
-            _ => lookingRight ? Vector2.right : Vector2.left
-        };
+        Vector2 pos = OffsetPosition(dir);
 
+        Destroy(Instantiate(DebugCollider, pos, Quaternion.identity), 0.5f);
+        
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
@@ -103,15 +99,21 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    private Vector2 OffsetPosition(Direction dir) {
+        return (Vector2) transform.position + dir switch
+        {
+            Direction.Up => 2.5f*Vector2.up,
+            Direction.Down => Vector2.down,
+            _ => Vector2.up + (lookingRight ? Vector2.right : Vector2.left)
+        };
+    }
+    
     private void TriggerHeavyAttack(Direction dir) {
         anim.SetBool(HeavyAttackBool, false);
         
-        Vector2 pos = (Vector2) transform.position + dir switch
-        {
-            Direction.Up => Vector2.up,
-            Direction.Down => Vector2.down,
-            _ => lookingRight ? Vector2.right : Vector2.left
-        };
+        Vector2 pos = OffsetPosition(dir);
+        
+        Destroy(Instantiate(DebugCollider, pos, Quaternion.identity), 0.5f);
         
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
