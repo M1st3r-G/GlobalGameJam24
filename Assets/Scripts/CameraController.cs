@@ -9,6 +9,7 @@ public class CameraController : MonoBehaviour
     private Rigidbody2D rb;
     private Camera cam;
     //Params
+    [SerializeField] private float camSpeed;
     //Temps
     private List<PlayerController> players;
     //Public
@@ -24,7 +25,7 @@ public class CameraController : MonoBehaviour
         cam.orthographicSize = camSize;
         if (((Vector2)transform.position - targetPosition).magnitude > 0.1f)
         {
-            rb.velocity = targetPosition - (Vector2)transform.position;
+            rb.velocity = (targetPosition - (Vector2)transform.position) * camSpeed;
         }
         else
         {
