@@ -20,8 +20,8 @@ public class PlayerController : MonoBehaviour {
     private InputAction move;
     private Rigidbody2D rb;
     private Animator anim;
+    private CharacterData currentCharacter;
     private SpriteRenderer sr;
-    [SerializeField] private GameObject DebugCollider;
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
@@ -95,8 +95,6 @@ public class PlayerController : MonoBehaviour {
 
         Vector2 pos = OffsetPosition(dir);
 
-        Destroy(Instantiate(DebugCollider, pos, Quaternion.identity), 0.5f);
-        
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
@@ -118,8 +116,6 @@ public class PlayerController : MonoBehaviour {
         anim.SetBool(HeavyAttackBool, false);
         
         Vector2 pos = OffsetPosition(dir);
-        
-        Destroy(Instantiate(DebugCollider, pos, Quaternion.identity), 0.5f);
         
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
@@ -168,5 +164,10 @@ public class PlayerController : MonoBehaviour {
         print(gameObject.name + " died. Your mom is disappointed.");
         OnPlayerDeath?.Invoke(GetComponent<PlayerInput>());
         Destroy(gameObject);
+    }
+
+    public void SetCharacter(CharacterData character) {
+        currentCharacter = character;
+        anim.runtimeAnimatorController = character.GetAnimationController;
     }
 }

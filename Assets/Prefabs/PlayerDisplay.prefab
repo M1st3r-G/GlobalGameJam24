@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5599642319054499890}
   - component: {fileID: 5416543299966588885}
-  - component: {fileID: 5701484122890916895}
   - component: {fileID: 7871291740588960024}
+  - component: {fileID: 4543393049708203383}
   m_Layer: 0
   m_Name: PlayerDisplay
   m_TagString: Untagged
@@ -61,8 +61,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5701484122890916895}
-        m_TargetAssemblyTypeName: PlayerDisplay, Assembly-CSharp
+      - m_Target: {fileID: 4543393049708203383}
+        m_TargetAssemblyTypeName: CharacterSelection.PlayerDisplay, Assembly-CSharp
         m_MethodName: Leave
         m_Mode: 0
         m_Arguments:
@@ -81,8 +81,8 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/a,/Keyboard/d,/XInputControllerWindows/leftStick/x,/XInputControllerWindows2/leftStick/x]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5701484122890916895}
-        m_TargetAssemblyTypeName: PlayerDisplay, Assembly-CSharp
+      - m_Target: {fileID: 4543393049708203383}
+        m_TargetAssemblyTypeName: CharacterSelection.PlayerDisplay, Assembly-CSharp
         m_MethodName: LoadNextScene
         m_Mode: 0
         m_Arguments:
@@ -97,8 +97,8 @@ MonoBehaviour:
     m_ActionName: Player/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth,/XInputControllerWindows2/buttonSouth]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5701484122890916895}
-        m_TargetAssemblyTypeName: PlayerDisplay, Assembly-CSharp
+      - m_Target: {fileID: 4543393049708203383}
+        m_TargetAssemblyTypeName: CharacterSelection.PlayerDisplay, Assembly-CSharp
         m_MethodName: ChangeToNext
         m_Mode: 0
         m_Arguments:
@@ -128,19 +128,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5701484122890916895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510487022585329011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24994f2be1033494ea63e767247c02d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holdTime: 1.5
 --- !u!212 &7871291740588960024
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -193,3 +180,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4543393049708203383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510487022585329011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec624d18f525b24b9355362602ec207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdTime: 1.5
