@@ -36,6 +36,7 @@ public class CameraController : MonoBehaviour
         Vector2 pos = new Vector2();
         foreach (PlayerController p in players)
         {
+            if (p.transform.position.y <= -10) continue;
             pos += (Vector2) p.transform.position;
         }
 

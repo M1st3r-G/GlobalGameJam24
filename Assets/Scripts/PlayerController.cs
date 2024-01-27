@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        ChangeHealth(-1);
+        Death();
     }
 
     private void ChangeHealth(int amount) {
