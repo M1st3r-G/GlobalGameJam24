@@ -23,15 +23,28 @@ public class PlayerController : MonoBehaviour {
     private SpriteRenderer sr;
     
     //Params
+    [Header("Base Stats")]
     [SerializeField] [Range(0f, 10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
     [SerializeField] [Range(1f, 10f)] private int maxHealth;
+    
+    [Header("Attack Stuff")]
     [SerializeField] [Range(1f, 10f)] private int damageLight;
     [SerializeField] [Range(1f, 10f)] private int damageHeavy;
     [SerializeField] [Range(0f, 5f)] private float lightAttackLimit;
+    
+    [Header("Damage Indicator")]
     [SerializeField] private Color damageColor;
     [SerializeField] private float secondsDamageIndicator;
+    
+    [Header("Artist Suck")]
     [SerializeField] private bool spriteWrongWay;
+
+    [Header("Ult Stuff")]
+    [SerializeField] private int neededUltCharge;
+    [SerializeField] private int chargeFromDamageTaken;
+    [SerializeField] private int chargeFromLightAttack;
+    [SerializeField] private int chargeFromHeavyAttack;
     
     //Temps
     private float lastAttackTime;
@@ -98,7 +111,7 @@ public class PlayerController : MonoBehaviour {
 
     public void OnUlt(InputAction.CallbackContext ctx) {
         if (!ctx.performed) return; 
-        if (ultCharge < 100) return;
+        if (ultCharge < neededUltCharge) return;
         
         print( gameObject.name + " HAT SEINE ULTIMATIVE FÄHIGKEIT BENUTZT!");
         anim.SetBool(UltimateBool, true);
@@ -119,7 +132,7 @@ public class PlayerController : MonoBehaviour {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageLight);
-            ultCharge += 12;
+            ultCharge += chargeFromLightAttack;
         }
     }
 
@@ -141,7 +154,7 @@ public class PlayerController : MonoBehaviour {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageHeavy);
-            ultCharge += 18;
+            ultCharge += chargeFromHeavyAttack;
         }
     }
 
@@ -161,7 +174,7 @@ public class PlayerController : MonoBehaviour {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
         StartCoroutine(Indicator(damageColor, secondsDamageIndicator));
         SoundManager.Instance.PlaySound(SoundManager.PlayerDamage);
-        ultCharge += 8;
+        ultCharge += chargeFromDamageTaken;
         if (currentHealth == 0) Death();
     }
 
