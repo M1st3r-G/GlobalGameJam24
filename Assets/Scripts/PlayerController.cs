@@ -32,6 +32,11 @@ public class PlayerController : MonoBehaviour {
     public delegate void PlayerDeathDelegate(PlayerInput player);
     public static PlayerDeathDelegate OnPlayerDeath;
 
+    public enum Direction
+    {
+        Up, Down, Side
+    }
+
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         move = GetComponent<PlayerInput>().actions.FindAction("Move");
@@ -62,6 +67,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void TriggerJump() {
+        anim.SetBool(JumpBool, false);
         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
     }
 
@@ -77,7 +83,7 @@ public class PlayerController : MonoBehaviour {
         anim.SetBool(Time.time - lastAttackTime > lightAttackLimit ? HeavyAttackBool : LightAttackBool, true);
     }
 
-    private void TriggerLightAttack() {
+    private void TriggerLightAttack(Direction dir) {
         anim.SetBool(LightAttackBool, false);
         Vector2 pos = transform.position;
         
@@ -91,7 +97,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void TriggerHeavyAttack() {
+    private void TriggerHeavyAttack(Direction dir) {
         anim.SetBool(HeavyAttackBool, false);
         Vector2 pos = transform.position;
 
