@@ -4,71 +4,83 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour {
-    
-    //ModifierReferences
-    [SerializeField] private InputActionReference upModifier;
-    [SerializeField] private InputActionReference rightModifier;
-    [SerializeField] private InputActionReference downModifier;
-    [SerializeField] private InputActionReference leftModifier;
+    private static readonly int UpModifierBool = Animator.StringToHash("Up");
+    private static readonly int DownModifierBool = Animator.StringToHash("Down");
+    private static readonly int LookingRightBool = Animator.StringToHash("LookingRight");
+    private static readonly int JumpBool = Animator.StringToHash("Jump");
+    private static readonly int AttackBool = Animator.StringToHash("Attack");
+    private static readonly int HeavyAttackBool = Animator.StringToHash("Heavy");
+    private static readonly int LightAttackBool = Animator.StringToHash("Light");
     
     //ComponentReferences
     private InputAction move;
     private Rigidbody2D rb;
+    private Animator anim;
     //Params
     [SerializeField] [Range(0f,10f)] private float speed;
     [SerializeField] [Range(0f, 10f)] private float jumpHeight;
     [SerializeField] [Range(1f, 10f)] private int maxHealth;
     [SerializeField] [Range(1f, 10f)] private int damageLight;
     [SerializeField] [Range(1f, 10f)] private int damageHeavy;
+    [SerializeField] [Range(0f, 5f)] private float lightAttackLimit;
     //Temps
+    private float lastAttackTime;
     private int currentHealth;
     private bool lookingRight;
     //Public
     public delegate void PlayerDeathDelegate(PlayerInput player);
     public static PlayerDeathDelegate OnPlayerDeath;
 
-    private void OnEnable() {
-        upModifier.action.Enable();
-        rightModifier.action.Enable();
-        downModifier.action.Enable();
-        leftModifier.action.Enable();
-    }
-
-
-    private void OnDisable() {
-        upModifier.action.Disable();
-        rightModifier.action.Disable();
-        downModifier.action.Disable();
-        leftModifier.action.Disable();
-    }
-
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         move = GetComponent<PlayerInput>().actions.FindAction("Move");
+        anim = GetComponent<Animator>();
         currentHealth = maxHealth;
+    }
+    
+    public void OnUpModifier(InputAction.CallbackContext ctx) {
+        if(ctx.started) anim.SetBool(UpModifierBool, true);
+        else if (ctx.canceled) anim.SetBool(UpModifierBool, false);
+    }
+
+    public void OnDownModifier(InputAction.CallbackContext ctx) {
+        if(ctx.started) anim.SetBool(DownModifierBool, true);
+        else if (ctx.canceled) anim.SetBool(DownModifierBool, false);
     }
 
     private void FixedUpdate() {
         float dir = move.ReadValue<float>() * speed;
         lookingRight = dir > 0;
+        anim.SetBool(LookingRightBool, lookingRight);
         rb.velocity = new Vector2(dir, rb.velocity.y);
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, 1<<3);
-        if (hit.collider is not null) 
-            rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+        anim.SetBool(JumpBool, hit.collider is not null);
     }
 
-    public void OnLightAttack(InputAction.CallbackContext ctx) {
-        if (!ctx.performed) return;
-        print("LightAttack");
-        
-        Vector2 pos = transform.position;
+    private void TriggerJump() {
+        rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+    }
 
-        if (upModifier.action.IsPressed()) pos += Vector2.up;
-        else if (downModifier.action.IsPressed()) pos += Vector2.down;
-        else pos += lookingRight ? Vector2.right : Vector2.left;
+    public void OnAttack(InputAction.CallbackContext ctx) {
+        if (ctx.started)
+        {
+            anim.SetBool(AttackBool, true);
+            lastAttackTime = Time.time;
+        }
+
+        if (!ctx.canceled) return;
+        anim.SetBool(AttackBool, false);
+        anim.SetBool(Time.time - lastAttackTime > lightAttackLimit ? HeavyAttackBool : LightAttackBool, true);
+    }
+
+    private void TriggerLightAttack() {
+        anim.SetBool(LightAttackBool, false);
+        Vector2 pos = transform.position;
+        
+        //Modifiy Position
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
@@ -78,16 +90,12 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void OnHeavyAttack(InputAction.CallbackContext ctx) {
-        if (!ctx.performed) return;
-        print("HeavyAttack");
-
+    private void TriggerHeavyAttack() {
+        anim.SetBool(HeavyAttackBool, false);
         Vector2 pos = transform.position;
 
-        if (upModifier.action.IsPressed()) pos += Vector2.up;
-        else if (downModifier.action.IsPressed()) pos += Vector2.down;
-        else pos += lookingRight ? Vector2.right : Vector2.left;
-
+        //Modifiy Position
+        
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
             PlayerController playerHit = hit.GetComponent<PlayerController>();
@@ -95,7 +103,7 @@ public class PlayerController : MonoBehaviour {
             playerHit.ChangeHealth(-damageHeavy);
         }
     }
-
+    
     private void OnTriggerEnter2D(Collider2D other) {
         Death();
     }
