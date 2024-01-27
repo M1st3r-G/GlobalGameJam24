@@ -21,6 +21,7 @@ public class PlayerDisplay : MonoBehaviour
     }
 
     public void Leave(InputAction.CallbackContext ctx) {
+        SelectionScreenManager.Instance.OnPlayerLeave(currentCharacterIndex);
         Destroy(gameObject);
     }
 }
