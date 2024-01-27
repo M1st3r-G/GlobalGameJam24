@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour {
     private static readonly int UpModifierBool = Animator.StringToHash("Up");
     private static readonly int DownModifierBool = Animator.StringToHash("Down");

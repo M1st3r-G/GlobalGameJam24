@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7665529352566483877}
   - component: {fileID: 3442617016933615015}
   - component: {fileID: 5298589192153179456}
+  - component: {fileID: 2862972254134084544}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -236,11 +237,35 @@ MonoBehaviour:
     m_ActionId: c08c376a-c3cf-4619-a9a7-e75005ec707f
     m_ActionName: UI/Pause[/Keyboard/escape]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5298589192153179456}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnDownModifier
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 8ee7d493-1f65-44cf-9055-95fc81c6d670
     m_ActionName: Player/Down[/Keyboard/s]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5298589192153179456}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnUpModifier
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 4950b176-78e3-4b1a-90fd-91a726898cb2
     m_ActionName: Player/Up[/Keyboard/w]
   m_NeverAutoSwitchControlSchemes: 0
@@ -265,4 +290,25 @@ MonoBehaviour:
   maxHealth: 10
   damageLight: 1
   damageHeavy: 2
-  lightAttackLimit: 0
+  lightAttackLimit: 1
+--- !u!95 &2862972254134084544
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4481277944908943068}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c7855b401b767584b81fb477a6d6e616, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
