@@ -1,3 +1,5 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -85,9 +87,13 @@ public class PlayerController : MonoBehaviour {
 
     private void TriggerLightAttack(Direction dir) {
         anim.SetBool(LightAttackBool, false);
-        Vector2 pos = transform.position;
-        
-        //Modifiy Position
+
+        Vector2 pos = (Vector2) transform.position + dir switch
+        {
+            Direction.Up => Vector2.up,
+            Direction.Down => Vector2.down,
+            _ => lookingRight ? Vector2.right : Vector2.left
+        };
 
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
@@ -99,9 +105,13 @@ public class PlayerController : MonoBehaviour {
 
     private void TriggerHeavyAttack(Direction dir) {
         anim.SetBool(HeavyAttackBool, false);
-        Vector2 pos = transform.position;
-
-        //Modifiy Position
+        
+        Vector2 pos = (Vector2) transform.position + dir switch
+        {
+            Direction.Up => Vector2.up,
+            Direction.Down => Vector2.down,
+            _ => lookingRight ? Vector2.right : Vector2.left
+        };
         
         Collider2D[] hits = Physics2D.OverlapCircleAll(pos, 1);
         foreach (var hit in hits) {
