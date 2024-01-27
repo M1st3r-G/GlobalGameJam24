@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     //Temps
     //Publics
     public static GameManager Instance {get; set; }
+
+    public delegate void PlayerJoinDelegate(PlayerController player);
+    public static PlayerJoinDelegate OnPlayerJoin;
      
     private void Awake()
     {
@@ -21,7 +24,10 @@ public class GameManager : MonoBehaviour
     }
     
     public void OnPlayerLeave(PlayerInput player) => Debug.LogWarning("Player Disconnected");
-    public void OnPlayerJoined(PlayerInput player) => Debug.LogWarning("Player Connected");
+    public void OnPlayerJoined(PlayerInput player) {
+        OnPlayerJoin?.Invoke(player.GetComponent<PlayerController>());
+    }
+
     private void OnDestroy()
     {
         if (Instance == this) Instance = null;
