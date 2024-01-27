@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.114498034, g: 0.45337784, b: 0.7830189, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -216,22 +216,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 130c8826-e42b-4a5f-9f7a-94661e84a870
     m_ActionName: Player/Join[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5298589192153179456}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: OnAttack
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 3fe7c4b0-c812-4d0f-add6-d1d82c7d8137
-    m_ActionName: Player/HeavyAttackUp[/Keyboard/w,/Keyboard/k]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c08c376a-c3cf-4619-a9a7-e75005ec707f
