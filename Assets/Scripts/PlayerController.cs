@@ -95,15 +95,18 @@ public class PlayerController : MonoBehaviour {
         anim.SetBool(LookingRightBool, lookingRight);
         sr.flipX = spriteWrongWay ? lookingRight : !lookingRight;
         if (Mathf.Abs(rb.velocity.x) > 0 && onGround) {
-            if (steps != null) {
+            if (steps is null) {
+                print("step start");
                 steps = StartCoroutine(StepSound());
             }
         } else {
-            StopCoroutine(StepSound());  
+            StopCoroutine(StepSound());
+            steps = null;
         }
     }
 
     private IEnumerator StepSound() {
+        print("step play");
         SoundManager.Instance.PlaySound(SoundManager.PlayerStep);
         yield return new WaitForSeconds(3);
     }
@@ -145,6 +148,7 @@ public class PlayerController : MonoBehaviour {
     
     private void TriggerLightAttack(Direction dir) {
         anim.SetBool(LightAttackBool, false);
+        SoundManager.Instance.PlaySound(SoundManager.PlayerPunch);
 
         Vector2 pos = OffsetPosition(dir);
 
@@ -154,7 +158,6 @@ public class PlayerController : MonoBehaviour {
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageLight);
             ChangeChargeBar(chargeFromLightAttack);
-            SoundManager.Instance.PlaySound(SoundManager.PlayerPunch);
         }
     }
 
@@ -168,6 +171,7 @@ public class PlayerController : MonoBehaviour {
 
     private void TriggerHeavyAttack(Direction dir) {
         anim.SetBool(HeavyAttackBool, false);
+        SoundManager.Instance.PlaySound(SoundManager.PlayerPunch);
 
         Vector2 pos = OffsetPosition(dir);
 
@@ -177,7 +181,6 @@ public class PlayerController : MonoBehaviour {
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageHeavy);
             ChangeChargeBar(chargeFromHeavyAttack);
-            SoundManager.Instance.PlaySound(SoundManager.PlayerPunch);
         }
     }
 

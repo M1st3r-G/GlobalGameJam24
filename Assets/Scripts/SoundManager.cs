@@ -44,6 +44,7 @@ public class SoundManager : MonoBehaviour
     }
 
     public void PlaySound(int index) {
+        print("sound");
         source.PlayOneShot(clips[index]);
     }
 
