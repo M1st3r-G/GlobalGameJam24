@@ -1,6 +1,6 @@
-using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
     //ComponentReferences
@@ -8,10 +8,9 @@ public class SoundManager : MonoBehaviour
     //Params
     [SerializeField] private AudioClip[] clips;
     //Temps
-    private static SoundManager instance;
     //Publics
-    public static SoundManager Instance => instance;
-    
+    public static SoundManager Instance { get; private set; }
+
     public const int PlayerPunch = 0;
     public const int PlayerStep = 1;
     public const int PlayerDeath = 2;
@@ -28,19 +27,19 @@ public class SoundManager : MonoBehaviour
     public const int WinPete = 11;
      
     private void Awake() {
-        if (instance is not null) {
+        if (Instance is not null) {
             Destroy(gameObject);
             return;
         }
 
-        instance = this;
+        Instance = this;
         DontDestroyOnLoad(gameObject);
         
         source = GetComponent<AudioSource>();
     }
     
     private void OnDestroy() {
-        if(Instance == this) instance = null;
+        if(Instance == this) Instance = null;
     }
 
     public void PlaySound(int index) {

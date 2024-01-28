@@ -37,6 +37,7 @@ public class MovingPlatform : MonoBehaviour {
     }
 
     private IEnumerator Rotate(float time) {
+        transform.DetachChildren();
         float counter = 0;
         Quaternion from = transform.rotation;
         Quaternion to = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 180);

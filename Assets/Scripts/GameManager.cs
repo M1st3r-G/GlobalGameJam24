@@ -37,7 +37,9 @@ public class GameManager : MonoBehaviour
         int i = 0;
         foreach (KeyValuePair<InputDevice, CharacterData> pair in data)
         {
-            inputManager.JoinPlayer(i, i, null, pair.Key).GetComponent<PlayerController>().SetCharacter(pair.Value);
+            PlayerController p = inputManager.JoinPlayer(i, i, null, pair.Key).GetComponent<PlayerController>();
+            p.SetCharacter(pair.Value);
+            p.transform.position = new Vector3(-4 + 2 * i, 4);
             i++;
         }
     }

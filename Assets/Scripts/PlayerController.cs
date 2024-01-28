@@ -97,19 +97,19 @@ public class PlayerController : MonoBehaviour {
         sr.flipX = spriteWrongWay ? lookingRight : !lookingRight;
         if (Mathf.Abs(rb.velocity.x) > 0 && onGround) {
             if (steps is null) {
-                print("step start");
                 steps = StartCoroutine(StepSound());
             }
         } else {
-            StopCoroutine(StepSound());
+            StopCoroutine(steps);
             steps = null;
         }
     }
 
     private IEnumerator StepSound() {
-        print("step play");
-        SoundManager.Instance.PlaySound(SoundManager.PlayerStep);
-        yield return new WaitForSeconds(3);
+        while (true) {
+            SoundManager.Instance.PlaySound(SoundManager.PlayerStep);
+            yield return new WaitForSeconds(1);
+        }
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {

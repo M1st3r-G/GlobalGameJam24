@@ -1,6 +1,8 @@
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace CharacterSelection
 {
@@ -46,7 +48,10 @@ namespace CharacterSelection
             }
             GameObject tmp =  Instantiate(new GameObject());
             tmp.AddComponent<PlayerInputCarriage>();
-            SceneManager.LoadScene(1);
+
+            int rn = Random.Range(1, 4);
+            SceneManager.LoadScene(rn);
+            SoundManager.Instance.PlayMusic(3 + rn);
         }
     }
 }
