@@ -100,7 +100,7 @@ public class PlayerController : MonoBehaviour {
                 steps = StartCoroutine(StepSound());
             }
         } else {
-            StopCoroutine(steps);
+            if (steps is not null) StopCoroutine(steps);
             steps = null;
         }
     }
