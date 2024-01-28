@@ -1,4 +1,5 @@
 using System.Collections;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour {
     private InputAction move;
     private Rigidbody2D rb;
     private Animator anim;
+    private PlayerInput input;
     private CharacterData currentCharacter;
     private SpriteRenderer sr;
     
@@ -41,12 +43,12 @@ public class PlayerController : MonoBehaviour {
     [Header("Artist Suck")]
     [SerializeField] private bool spriteWrongWay;
 
-    [Header("Ult Stuff")]
+    [Header("Ult Stuff")] 
+    private UltChargesController chargeController;
     [SerializeField] private int neededUltCharge;
     [SerializeField] private int chargeFromDamageTaken;
     [SerializeField] private int chargeFromLightAttack;
     [SerializeField] private int chargeFromHeavyAttack;
-    [SerializeField] private Image ultChargeBar;
     
     //Temps
     private float lastAttackTime;
@@ -69,6 +71,8 @@ public class PlayerController : MonoBehaviour {
         move = GetComponent<PlayerInput>().actions.FindAction("Move");
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        input = GetComponent<PlayerInput>();
+        chargeController = GameObject.FindGameObjectWithTag("UltiBar").GetComponent<UltChargesController>(); 
         currentHealth = maxHealth;
     }
 
@@ -183,7 +187,7 @@ public class PlayerController : MonoBehaviour {
     private void ChangeChargeBar(int amount) {
         ultCharge += amount;
         if (ultCharge > neededUltCharge) ultCharge = neededUltCharge;
-        ultChargeBar.fillAmount = (float) ultCharge / neededUltCharge;
+        chargeController.ChangeValue(input.playerIndex, (float) ultCharge / neededUltCharge);
     }
 
     private IEnumerator Indicator(Color color, float seconds) {
