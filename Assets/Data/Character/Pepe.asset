@@ -15,5 +15,5 @@ MonoBehaviour:
   anim: {fileID: 9100000, guid: 87462f4fe3ea8c84ba554e4d165ccdc8, type: 2}
   dSprite: {fileID: 1235577486, guid: 142e1895b1e091340b9e7bdcb72e3341, type: 3}
   isLookingLeft: 0
-  wSprite: {fileID: 0}
+  wSprite: {fileID: 21300000, guid: 54cbf8fe8c3a66f4bacb6ac831c295c3, type: 3}
   ultiVid: {fileID: 32900000, guid: 3c62ec31e5fe8744199b64cca9972f9c, type: 3}
