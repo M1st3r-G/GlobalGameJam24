@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Cat
   m_EditorClassIdentifier: 
   anim: {fileID: 9100000, guid: c7855b401b767584b81fb477a6d6e616, type: 2}
-  dSprite: {fileID: 1639232966, guid: a3773f766519c8d4cb651f516f70a7ad, type: 3}
+  dSprite: {fileID: -326052625, guid: 142e1895b1e091340b9e7bdcb72e3341, type: 3}
   isLookingLeft: 0
   wSprite: {fileID: 0}
   ultiVid: {fileID: 32900000, guid: d6733b66af552d74b89c3d761f8bb04c, type: 3}
