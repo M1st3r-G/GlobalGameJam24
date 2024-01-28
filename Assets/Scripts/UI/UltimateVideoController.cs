@@ -10,7 +10,7 @@ namespace UI
     public class UltimateVideoController : MonoBehaviour
     {
         //ComponentReferences
-        [SerializeField] private InputActionMap playerActions;
+        [SerializeField] private InputActionAsset playerActions;
         private VideoPlayer vid;
         private CanvasGroup group;
         //Params
@@ -30,12 +30,13 @@ namespace UI
             playerActions.Disable();
             vid.clip = data.ultimateVideo;
             vid.Play();
-            StartCoroutine(CleanUpAfterTime((float) vid.length));
-            return (float) vid.length;
+            Debug.LogWarning((float) vid.clip.length);
+            StartCoroutine(CleanUpAfterTime((float) vid.clip.length));
+            return (float) vid.clip.length;
         }
 
         private IEnumerator CleanUpAfterTime(float t) {
-            yield return new WaitForSeconds(t);
+            yield return new WaitForSecondsRealtime(t);
             Time.timeScale = 1f;
             playerActions.Enable();
             group.alpha = 0f;
