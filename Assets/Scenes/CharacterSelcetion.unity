@@ -822,6 +822,7 @@ MonoBehaviour:
   possibleCharacters:
   - {fileID: 11400000, guid: 502aab53a9b9d6347a5ae28a5265861d, type: 2}
   - {fileID: 11400000, guid: be8efbcc9cefafb4196957d1fa8583c3, type: 2}
+  - {fileID: 11400000, guid: b24d8b1c99e6ea34283ada71d765d7fe, type: 2}
 --- !u!1 &1653884705
 GameObject:
   m_ObjectHideFlags: 0
