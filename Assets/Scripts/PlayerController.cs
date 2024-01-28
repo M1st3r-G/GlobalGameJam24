@@ -2,7 +2,6 @@ using System.Collections;
 using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
@@ -205,5 +204,6 @@ public class PlayerController : MonoBehaviour {
     public void SetCharacter(CharacterData character) {
         currentCharacter = character;
         anim.runtimeAnimatorController = currentCharacter.GetAnimationController;
+        spriteWrongWay = currentCharacter.DefaultIsLookingLeft; 
     }
 }

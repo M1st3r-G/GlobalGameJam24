@@ -8,5 +8,7 @@ public class CharacterData : ScriptableObject
     [SerializeField] private RuntimeAnimatorController anim;
     public Sprite DefaultSprite => dSprite;
     [SerializeField] private Sprite dSprite;
+    public bool DefaultIsLookingLeft => isLookingLeft;
+    [SerializeField] private bool isLookingLeft;
     //Params
 }
