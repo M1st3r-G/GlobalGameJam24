@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Video;
 
 [CreateAssetMenu(menuName = "CharacterData")]
 public class CharacterData : ScriptableObject
@@ -12,5 +13,7 @@ public class CharacterData : ScriptableObject
     [SerializeField] private bool isLookingLeft;
     public Sprite WinSprite => wSprite;
     [SerializeField] private Sprite wSprite;
+    public VideoClip ultimateVideo => ultiVid;
+    [SerializeField] private VideoClip ultiVid;
     //Params
 }

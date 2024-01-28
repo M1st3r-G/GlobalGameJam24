@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Ult Stuff")] 
     private UltChargesController chargeController;
+    [SerializeField] private float ultForce;
     [SerializeField] private int neededUltCharge;
     [SerializeField] private int chargeFromDamageTaken;
     [SerializeField] private int chargeFromLightAttack;
@@ -62,7 +63,7 @@ public class PlayerController : MonoBehaviour {
     public delegate void PlayerDeathDelegate(PlayerInput player);
     public static PlayerDeathDelegate OnPlayerDeath;
 
-    public enum Direction {
+    private enum Direction {
         Up,
         Down,
         Side
@@ -141,6 +142,27 @@ public class PlayerController : MonoBehaviour {
 
     private void TriggerUltimate() {
         anim.SetBool(UltimateBool, false);
+        StartCoroutine(DelayedUltimateEffect(UltimateVideoController.Instance.PlayVideo(currentCharacter)));
+    }
+
+    private IEnumerator DelayedUltimateEffect(float t) {
+        yield return new WaitForSeconds(t);
+
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        PlayerController closest = null;
+        float distanceToClosest = float.PositiveInfinity;
+
+        foreach (GameObject player in players)
+        {
+            PlayerController p = player.GetComponent<PlayerController>();
+            if(p == this) continue;
+            if (Vector3.Distance(player.transform.position, transform.position) < distanceToClosest)
+            {
+                closest = p;
+            }
+        }
+        
+        closest.rb.AddForce((closest.transform.position - transform.position) * ultForce);
     }
     
     private void TriggerLightAttack(Direction dir) {
