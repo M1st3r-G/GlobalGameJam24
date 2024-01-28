@@ -10,5 +10,7 @@ public class CharacterData : ScriptableObject
     [SerializeField] private Sprite dSprite;
     public bool DefaultIsLookingLeft => isLookingLeft;
     [SerializeField] private bool isLookingLeft;
+    public Sprite WinSprite => wSprite;
+    [SerializeField] private Sprite wSprite;
     //Params
 }
