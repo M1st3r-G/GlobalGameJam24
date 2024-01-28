@@ -29,11 +29,22 @@ public class MovingPlatform : MonoBehaviour {
             }
             rounds++;
             if (rounds == points.Length) rounds = 0;
+            if (rounds == points.Length - 1 && turnOnLastPoint) {
+                StartCoroutine(Rotate(waitTime));
+            }
             yield return new WaitForSeconds(waitTime);
         }
     }
 
-    private void Rotate() {
+    private IEnumerator Rotate(float time) {
+        float counter = 0;
+        Quaternion from = transform.rotation;
+        Quaternion to = Quaternion.Euler(0, 0, transform.rotation.eulerAngles.z + 180);
         
+        while (counter / time < 1) {
+            transform.rotation = Quaternion.Lerp(from, to, counter / time);
+            counter += Time.deltaTime;
+            yield return null;
+        }
     }
 }
