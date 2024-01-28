@@ -1,6 +1,5 @@
 using System.Collections;
 using UI;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -138,7 +137,7 @@ public class PlayerController : MonoBehaviour {
         if (!ctx.performed) return; 
         if (ultCharge < neededUltCharge) return;
 
-        ultCharge = 0;
+        ChangeChargeBar(0);
         StartCoroutine(DelayedUltimateEffect(UltimateVideoController.Instance.PlayVideo(currentCharacter)));
     }
 
