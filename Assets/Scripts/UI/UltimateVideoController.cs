@@ -30,7 +30,6 @@ namespace UI
             playerActions.Disable();
             vid.clip = data.ultimateVideo;
             vid.Play();
-            Debug.LogWarning((float) vid.clip.length);
             StartCoroutine(CleanUpAfterTime((float) vid.clip.length));
             return (float) vid.clip.length;
         }
