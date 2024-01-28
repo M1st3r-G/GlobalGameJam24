@@ -26,7 +26,7 @@ public class WinScreenController : MonoBehaviour
         {
             PlayerInput p = players[i];
             winnerImages[i].gameObject.SetActive(true);
-            winnerImages[i].sprite = p.GetComponent<PlayerController>().GetCharacter().DefaultSprite;
+            winnerImages[i].sprite = p.GetComponent<PlayerController>().GetCharacter().WinSprite;
         }
     }
 }
