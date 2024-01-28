@@ -1,5 +1,6 @@
 using System.Collections;
 using UI;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -54,6 +55,8 @@ public class PlayerController : MonoBehaviour {
     private int currentHealth;
     private bool lookingRight;
     private int ultCharge;
+    private Coroutine steps;
+    private bool onGround;
 
     //Public
     public delegate void PlayerDeathDelegate(PlayerInput player);
@@ -91,6 +94,18 @@ public class PlayerController : MonoBehaviour {
         if (Mathf.Abs(rb.velocity.x) > 0) lookingRight = dir > 0;
         anim.SetBool(LookingRightBool, lookingRight);
         sr.flipX = spriteWrongWay ? lookingRight : !lookingRight;
+        if (Mathf.Abs(rb.velocity.x) > 0 && onGround) {
+            if (steps != null) {
+                steps = StartCoroutine(StepSound());
+            }
+        } else {
+            StopCoroutine(StepSound());  
+        }
+    }
+
+    private IEnumerator StepSound() {
+        SoundManager.Instance.PlaySound(SoundManager.PlayerStep);
+        yield return new WaitForSeconds(3);
     }
 
     public void OnJump(InputAction.CallbackContext ctx) {
@@ -101,6 +116,7 @@ public class PlayerController : MonoBehaviour {
     private void TriggerJump() {
         anim.SetBool(JumpBool, false);
         rb.velocity = new Vector2(rb.velocity.x, jumpHeight);
+        onGround = false;
     }
 
     public void OnAttack(InputAction.CallbackContext ctx) {
@@ -138,6 +154,7 @@ public class PlayerController : MonoBehaviour {
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageLight);
             ChangeChargeBar(chargeFromLightAttack);
+            SoundManager.Instance.PlaySound(SoundManager.PlayerPunch);
         }
     }
 
@@ -160,6 +177,7 @@ public class PlayerController : MonoBehaviour {
             if (playerHit is null || playerHit == this) continue;
             playerHit.ChangeHealth(-damageHeavy);
             ChangeChargeBar(chargeFromHeavyAttack);
+            SoundManager.Instance.PlaySound(SoundManager.PlayerPunch);
         }
     }
 
@@ -169,16 +187,19 @@ public class PlayerController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D other) {
         if (other.gameObject.CompareTag("Platform")) transform.SetParent(other.transform);
+        RaycastHit2D checkGround = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, 1<<3);
+        if (checkGround.collider != null) onGround = true;
     }
 
     private void OnCollisionExit2D(Collision2D other) {
         if (other.gameObject.CompareTag("Platform")) transform.SetParent(null);
+        RaycastHit2D checkGround = Physics2D.Raycast(transform.position, Vector2.down, 0.6f, 1<<3);
+        if (checkGround.collider == null) onGround = false;
     }
 
     private void ChangeHealth(int amount) {
         currentHealth = Mathf.Clamp(amount + currentHealth, 0, maxHealth);
         StartCoroutine(Indicator(damageColor, secondsDamageIndicator));
-        SoundManager.Instance.PlaySound(SoundManager.PlayerDamage);
         ChangeChargeBar(chargeFromDamageTaken);
         if (currentHealth == 0) Death();
     }
@@ -198,6 +219,7 @@ public class PlayerController : MonoBehaviour {
     private void Death() {
         print(gameObject.name + " died. Your mom is disappointed.");
         OnPlayerDeath?.Invoke(GetComponent<PlayerInput>());
+        SoundManager.Instance.PlaySound(SoundManager.PlayerDeath);
         Destroy(gameObject);
     }
 

@@ -12,7 +12,20 @@ public class SoundManager : MonoBehaviour
     //Publics
     public static SoundManager Instance => instance;
     
-    public const int PlayerDamage = 0;
+    public const int PlayerPunch = 0;
+    public const int PlayerStep = 1;
+    public const int PlayerDeath = 2;
+    public const int ButtonClick = 3;
+
+    public const int MapCat = 4;
+    public const int MapLSD = 5;
+    public const int PolishMap = 6;
+    public const int CYFMH = 7;
+
+    public const int WinCat = 8;
+    public const int WinGigaChad = 9;
+    public const int WinPepe = 10;
+    public const int WinPete = 11;
      
     private void Awake() {
         if (instance is not null) {
@@ -32,5 +45,10 @@ public class SoundManager : MonoBehaviour
 
     public void PlaySound(int index) {
         source.PlayOneShot(clips[index]);
+    }
+
+    public void PlayMusic(int index) {
+        source.clip = clips[index];
+        source.Play();
     }
 }
