@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     //ComponentReferences
     private PlayerInputManager inputManager;
     //Params
+    private List<PlayerInput> podium;
     //Temps
     //Public
     public static GameManager Instance {get; set; }
@@ -41,12 +42,20 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable() {
         PlayerController.OnPlayerDeath += OnPlayerLeaved;
+        PlayerController.OnPlayerDeath += CheckWin;
     }
 
     private void OnDisable() {
         PlayerController.OnPlayerDeath -= OnPlayerLeaved;
+        PlayerController.OnPlayerDeath -= CheckWin;
     }
 
+    private void CheckWin(PlayerInput player) {
+        podium.Add(player);
+        if (inputManager.playerCount != 1) return;
+        //Show Winscreen.
+    }
+    
     private static void OnPlayerLeaved(PlayerInput player) {
         OnPlayerLeave?.Invoke(player.GetComponent<PlayerController>());
     }
