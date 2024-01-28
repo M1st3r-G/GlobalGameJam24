@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a37355b4d9231654f98669acb340d232, type: 3}
-  m_Name: Piet
+  m_Name: Giga
   m_EditorClassIdentifier: 
-  anim: {fileID: 9100000, guid: 97afa6df0d9704b4792cc98c9c20bb9c, type: 2}
-  dSprite: {fileID: 1967373696, guid: 142e1895b1e091340b9e7bdcb72e3341, type: 3}
+  anim: {fileID: 9100000, guid: 17f9aa1eb9cc71e4596ca9e64c0cfd61, type: 2}
+  dSprite: {fileID: -1020665673, guid: 142e1895b1e091340b9e7bdcb72e3341, type: 3}
   isLookingLeft: 1
-  wSprite: {fileID: 1967373696, guid: 142e1895b1e091340b9e7bdcb72e3341, type: 3}
-  ultiVid: {fileID: 32900000, guid: bce9ac1497b5c3a40b93687a27474b5d, type: 3}
+  wSprite: {fileID: 0}
+  ultiVid: {fileID: 32900000, guid: 5e58c08a003ad5f45a6a0b6134574089, type: 3}
