@@ -222,10 +222,12 @@ public class PlayerController : MonoBehaviour {
         SoundManager.Instance.PlaySound(SoundManager.PlayerDeath);
         Destroy(gameObject);
     }
-
+    
     public void SetCharacter(CharacterData character) {
         currentCharacter = character;
         anim.runtimeAnimatorController = currentCharacter.GetAnimationController;
         spriteWrongWay = currentCharacter.DefaultIsLookingLeft; 
     }
+    
+    public CharacterData GetCharacter() => currentCharacter;
 }
