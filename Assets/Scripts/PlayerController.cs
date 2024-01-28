@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour {
             }
         }
         
-        closest.rb.AddForce((closest.transform.position - transform.position) * ultForce);
+        Destroy(closest.gameObject);
     }
     
     private void TriggerLightAttack(Direction dir) {
