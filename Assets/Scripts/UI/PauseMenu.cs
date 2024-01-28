@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace UI
 {
@@ -23,5 +24,7 @@ namespace UI
         
         private void OnPause(InputAction.CallbackContext ctx) => ToggleMenu();
         public void ContinueButton() => ToggleMenu();
+        public void QuitMainMenu() => SceneManager.LoadScene(0);
+        public void QuitFull() => Application.Quit();
     }
 }
