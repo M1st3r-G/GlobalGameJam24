@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     //ComponentReferences
     private PlayerInputManager inputManager;
+    [SerializeField] private WinScreenController winScreen;
     //Params
     private List<PlayerInput> podium;
     //Temps
@@ -28,6 +29,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this);
 
         inputManager = GetComponent<PlayerInputManager>();
+        podium = new List<PlayerInput>();
     }
 
     private void Start() {
@@ -52,8 +54,10 @@ public class GameManager : MonoBehaviour
 
     private void CheckWin(PlayerInput player) {
         podium.Add(player);
-        if (inputManager.playerCount != 1) return;
-        //Show Winscreen.
+        if (inputManager.playerCount != 2) return;
+        PlayerInput lastPlayer =  GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInput>();
+        podium.Add(lastPlayer);
+        winScreen.SetScreen(podium);
     }
     
     private static void OnPlayerLeaved(PlayerInput player) {

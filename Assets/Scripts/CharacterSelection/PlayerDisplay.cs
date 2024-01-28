@@ -39,7 +39,11 @@ namespace CharacterSelection
         public void LoadNextScene(InputAction.CallbackContext ctx) {
             if (ctx.started) startHold = Time.time;
             if (!ctx.canceled || !(Time.time - startHold > holdTime)) return;
-        
+            if (PlayerInputManager.instance.playerCount == 1)
+            {
+                Debug.LogError("Needs more than one Player to start");
+                return;
+            }
             GameObject tmp =  Instantiate(new GameObject());
             tmp.AddComponent<PlayerInputCarriage>();
             SceneManager.LoadScene(1);
