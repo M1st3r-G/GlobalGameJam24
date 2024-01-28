@@ -134,14 +134,8 @@ public class PlayerController : MonoBehaviour {
     public void OnUlt(InputAction.CallbackContext ctx) {
         if (!ctx.performed) return; 
         if (ultCharge < neededUltCharge) return;
-        
-        print( gameObject.name + " HAT SEINE ULTIMATIVE FÄHIGKEIT BENUTZT!");
-        anim.SetBool(UltimateBool, true);
-        ultCharge = 0;
-    }
 
-    private void TriggerUltimate() {
-        anim.SetBool(UltimateBool, false);
+        ultCharge = 0;
         StartCoroutine(DelayedUltimateEffect(UltimateVideoController.Instance.PlayVideo(currentCharacter)));
     }
 
