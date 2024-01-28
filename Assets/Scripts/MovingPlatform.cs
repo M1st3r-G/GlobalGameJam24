@@ -7,17 +7,19 @@ public class MovingPlatform : MonoBehaviour {
     //Params
     [SerializeField] private float timeForLine;
     [SerializeField] private float waitTime;
+    [SerializeField] private bool turnOnLastPoint;
+    [SerializeField] private int startPoint;
     //Temps
     private Vector2[] points;
     //Public
 
     private void Awake() {
         points = line.points;
-        StartCoroutine(MoveToPoint());
+        StartCoroutine(MoveToPoint(startPoint));
     }
 
-    private IEnumerator MoveToPoint() {
-        int rounds = 0;
+    private IEnumerator MoveToPoint(int start) {
+        int rounds = start;
         while (true) {
             float counter = 0;
             while (counter / timeForLine < 1) {
@@ -29,5 +31,9 @@ public class MovingPlatform : MonoBehaviour {
             if (rounds == points.Length) rounds = 0;
             yield return new WaitForSeconds(waitTime);
         }
+    }
+
+    private void Rotate() {
+        
     }
 }
