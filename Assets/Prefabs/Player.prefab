@@ -294,6 +294,10 @@ MonoBehaviour:
   damageColor: {r: 1, g: 0.4392157, b: 0.47843137, a: 1}
   secondsDamageIndicator: 0.5
   spriteWrongWay: 0
+  neededUltCharge: 100
+  chargeFromDamageTaken: 15
+  chargeFromLightAttack: 5
+  chargeFromHeavyAttack: 15
 --- !u!95 &2862972254134084544
 Animator:
   serializedVersion: 5
